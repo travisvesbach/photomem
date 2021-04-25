@@ -1,0 +1,11 @@
+<h2>Synced Image Details</h2>
+
+<a href="/images/sync">Sync Images</a>
+
+<% if images.any? %>
+    <div id="images">
+        <p>image count: <%= images.count %></p>
+    </div>
+<% else %>
+    <p class="placeholder">There are no images synced yet.</p>
+<% end %>
