@@ -1,0 +1,2 @@
+module Photomem
+end

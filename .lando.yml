@@ -1,0 +1,22 @@
+name: photomem
+proxy:
+  appserver:
+    - 'photomem.test:2300'
+services:
+  appserver:
+    type: ruby
+    port: 2300
+    command: bundle exec hanami server --host=0.0.0.0
+    build:
+      - gem install hanami
+      - bundle install
+    run_as_root:
+      - apt-get update
+      - apt-get install -y sqlite3 libsqlite3-dev ghostscript
+tooling:
+  bundle:
+    service: appserver
+  gem:
+    service: appserver
+  hanami:
+    service: appserver

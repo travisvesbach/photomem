@@ -1,0 +1,3 @@
+project=photomem
+test=rspec
+template=erb
