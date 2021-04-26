@@ -6,5 +6,6 @@
 
 root to: 'home#index'
 get '/images/sync', to: 'images#sync'
+get '/images/today-or-random', to: 'images#today-or-random', as: 'todayOrRandom'
 
 resources :images, only: [:index]

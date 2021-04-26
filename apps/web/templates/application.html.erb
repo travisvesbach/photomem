@@ -3,9 +3,22 @@
   <head>
     <title>Web</title>
     <%= favicon %>
+    <%= stylesheet 'main' %>
+
   </head>
   <body>
-    <h1>PhotoMem</h1>
-    <%= yield %>
+    <header>
+        <h1>
+            <a href="/">PhotoMem</a>
+        </h1>
+
+        <div class="menu">
+            <a class="nav-link" href="/images">Synced Images</a>
+        </div>
+    </header>
+
+    <div class="main-content">
+      <%= yield %>
+    </div>
   </body>
 </html>
