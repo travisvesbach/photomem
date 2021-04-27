@@ -65,3 +65,15 @@ header h1 a {
 .button:hover {
     background: #b45309;
 }
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: .75;
+}
+
+button:disabled:hover {
+    background: #92400e;
+}
