@@ -35,8 +35,8 @@ module Web
                             c.gravity 'Southeast'
                             c.fill 'white'
                             c.undercolor '#0008'
-                            c.pointsize '24'
-                            c.draw "text 0,-5 '" + imageObject.date_taken.strftime('%-m/%-d/%Y') + "'"
+                            c.pointsize '48'
+                            c.draw "text 0,-9 '" + imageObject.date_taken.strftime('%-m/%-d/%Y') + "'"
                         end
                     end
 

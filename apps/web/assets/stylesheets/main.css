@@ -75,5 +75,6 @@ button:disabled {
 }
 
 button:disabled:hover {
+    cursor: wait;
     background: #92400e;
 }
