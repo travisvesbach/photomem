@@ -13,4 +13,8 @@ class ImageRepository < Hanami::Repository
 
         images.sample
     end
+
+    def bulkInsert(inputArray)
+        command(:create, images, use: [:timestamps], result: :many).call(inputArray)
+    end
 end

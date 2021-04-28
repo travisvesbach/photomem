@@ -7,6 +7,7 @@ module Web
                 def call(params)
                     ImageRepository.new.clear
 
+                    imageArray = []
                     Dir.glob("./public/assets/sync/**/*.{jpg,png,JPG}").each do |file|
                         miniImage = MiniMagick::Image.open(file)
 
@@ -14,8 +15,15 @@ module Web
                         if date_taken == nil && miniImage.exif["DateTime"]
                             date_taken = miniImage.exif["DateTime"]
                         end
+                        imageArray.append({path: file, date_taken: date_taken})
 
-                        ImageRepository.new.create(path: file, date_taken: date_taken)
+                        if imageArray.length >= 100
+                            ImageRepository.new.bulkInsert(imageArray)
+                            imageArray = []
+                        end
+                    end
+                    if imageArray.length > 0
+                        ImageRepository.new.bulkInsert(imageArray)
                     end
                 end
             end
