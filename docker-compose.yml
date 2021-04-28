@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  web:
+    build: .
+    command: bash -c "hanami server --host=0.0.0.0"
+    volumes:
+      - .:/app
+    ports:
+      - "2300:2300"
