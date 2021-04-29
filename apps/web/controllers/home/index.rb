@@ -4,12 +4,14 @@ module Web
             class Index
                 include Web::Action
 
-                expose :images, :today
+                expose :images, :today, :directories
 
                 def call(params)
-                    @images = ImageRepository.new.all
+                    @images = ImageRepository.new.all.to_a
 
-                    @today = ImageRepository.new.takenToday
+                    @today = ImageRepository.new.takenToday.to_a
+
+                    @directories = DirectoryRepository.new.byPath.to_a
                 end
             end
         end

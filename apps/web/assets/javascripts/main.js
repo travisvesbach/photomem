@@ -1,23 +1,23 @@
-console.log('we have contact');
+function runSync(url) {
 
-function syncImages() {
-
-    $('button').first().text('syncing ... please wait').prop('disabled', true);
-
+    $('button').prop('disabled', true);
+    $('.alert-syncing').css('display', 'flex');
     $('body').css('cursor', 'wait');
 
     $.ajax({
         type: 'POST',
-        url: 'images/sync',
+        url: url,
         data: {},
         success: function(data) {
-            $('button').first().text('Run Sync').prop('disabled', false);
+            $('.alert-syncing').css('display', 'none');
+            $('button').prop('disabled', false);
             $('body').css('cursor', 'inherit');
             alert("Success!" + "\n\nClick 'OK' to refresh the page");
             location.reload();
         },
         error: function(data) {
-            $('button').first().text('Run Sync').prop('disabled', false);
+            $('.alert-syncing').css('display', 'none');
+            $('button').prop('disabled', false);
             $('body').css('cursor', 'inherit');
             alert("Something went wrong");
         },

@@ -1,10 +1,24 @@
 <h2 style="display: inline-block;">Synced Image Details</h2>
 
-<button class="button" onclick="syncImages()">Run Sync</button>
+<button class="button" onclick="runSync('<%= Web.routes.path(:sync) %>')">Run Sync</button>
 
 <% if images.any? %>
     <p>Synced image count: <%= images.count %></p>
     <p>Images taken this day in history: <%= today.count %></p>
+
+    <% if directories.any? %>
+        <h3>Directories</h3>
+        <% directories.each do |directory| %>
+            <div class="directory-row">
+                <p>
+                    <strong>Path:</strong> <%= directory.path %> <br>
+                    <strong>Count:</strong> <%= directory.image_count %>
+                </p>
+                <button class="button" onclick="runSync('<%= Web.routes.path(:directorySync, id: directory.id) %>')">Resync Directory</button>
+            </div>
+            <hr>
+        <% end %>
+    <% end %>
 
     <h3>How to Get an Image</h3>
     <p>

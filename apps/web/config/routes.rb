@@ -6,7 +6,8 @@
 
 root to: 'home#index'
 
-post '/images/sync', to: 'images#sync'
+post '/images/sync', to: 'images#sync', as: 'sync'
 get '/images/today-or-random', to: 'images#today-or-random', as: 'todayOrRandom'
 
 # resources :images, only: [:index]
+post '/directories/:id/sync', to: 'directories#sync',as: 'directorySync'

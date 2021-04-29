@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Web</title>
-    <%= favicon %>
+    <head>
+        <title>Web</title>
+        <%= favicon %>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    <%= stylesheet 'main' %>
-    <%= javascript 'main' %>
+        <%= stylesheet 'main' %>
+        <%= javascript 'main' %>
 
-  </head>
-  <body>
-    <header>
-        <h1>
-            <a href="/">PhotoMem</a>
-        </h1>
-    </header>
+    </head>
+    <body>
+        <header>
+            <h1>
+                <a href="/">PhotoMem</a>
+            </h1>
+        </header>
 
-    <div class="main-content">
-      <%= yield %>
-    </div>
-  </body>
+        <div class="main-content">
+            <%= yield %>
+        </div>
+
+        <div class="alert alert-syncing">
+            <div class="lds-dual-ring"></div>
+            <div class="alert-message">Syncing...please wait</div>
+        </div>
+
+    </body>
 </html>
