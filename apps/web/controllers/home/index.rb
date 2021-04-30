@@ -11,7 +11,7 @@ module Web
 
                     @today = ImageRepository.new.takenToday.to_a
 
-                    @directories = DirectoryRepository.new.byPath.to_a
+                    @directories = DirectoryRepository.new.orderedByPath.to_a
                 end
             end
         end

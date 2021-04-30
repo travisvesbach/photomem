@@ -14,7 +14,8 @@
                     <strong>Path:</strong> <%= directory.path %> <br>
                     <strong>Count:</strong> <%= directory.image_count %>
                 </p>
-                <button class="button" onclick="runSync('<%= Web.routes.path(:directorySync, id: directory.id) %>')">Resync Directory</button>
+                <button class="button" onclick="runSync('<%= Web.routes.path(:directorySync, id: directory.id) %>')">Resync</button>
+                <button class="button button-danger" href="" onclick="removeDirectory('<%= Web.routes.path(:directoryRemove, id: directory.id) %>')">Remove</button>
             </div>
             <hr>
         <% end %>
@@ -73,7 +74,6 @@
                 <% end
                 path = pathWithoutFileName
                 count = 0
-
             end
             count += 1
         end

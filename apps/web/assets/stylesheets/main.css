@@ -58,14 +58,29 @@ header h1 a {
     background: #92400e;
     color: white;
     text-decoration: none;
-    border-radius: 1rem;
+    border-radius: .75rem;
     border: none;
-    padding: .5rem;
+    padding: .5rem .75rem;
     margin: 0 1rem;
+    font-size: .9rem;
+    text-decoration: none;
 }
 
 .button:hover {
     background: #b45309;
+    text-decoration: none;
+}
+
+.button-danger {
+    background-color: #991b1b;
+}
+
+.button-danger:hover {
+    background-color: #b91c1c;
+}
+
+.button-danger:disabled:hover {
+    background-color: #991b1b;
 }
 
 button {

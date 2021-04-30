@@ -12,8 +12,12 @@ class DirectoryRepository < Hanami::Repository
         return DirectoryRepository.new.create(path: input)
     end
 
-    def byPath
+    def orderedByPath
         directories.order(:path)
+    end
+
+    def byPath(path)
+        directories.read("SELECT * FROM directories WHERE directories.path LIKE '#{path}'").first
     end
 
     def removeByParentPath(input)

@@ -41,6 +41,8 @@ module Web
                             DirectoryRepository.new.update(dir.id, path: dir.path, image_count: dir.getImageCount)
                         end
                     end
+
+                    directory.updateParentImageCount
                 end
             end
         end
