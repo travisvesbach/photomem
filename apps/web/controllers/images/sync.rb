@@ -5,39 +5,29 @@ module Web
                 include Web::Action
 
                 def call(params)
-                    ImageRepository.new.clear
-                    DirectoryRepository.new.clear
+                    directory = DirectoryRepository.new.find(params[:id])
 
-                    imageArray = []
+                    # remove directory images and sync
+                    directory.removeImages
+                    directory.syncImages
+
+                    # create directories that don't exist
                     directoryArray = []
-                    Dir.glob("./public/assets/sync/**/*.{jpg,png,JPG}").each do |file|
-                        miniImage = MiniMagick::Image.open(file)
-
-                        date_taken = miniImage.exif["DateTimeOriginal"] ? DateTime.strptime(miniImage.exif["DateTimeOriginal"], "%Y:%m:%d %R") : nil
-                        if date_taken == nil && miniImage.exif["DateTime"]
-                            date_taken = miniImage.exif["DateTime"]
-                        end
-                        imageArray.append({path: file, date_taken: date_taken})
-
-                        directory = file.reverse.partition("/").last.reverse.partition('assets/sync/').last
-                        if !directoryArray.any? {|dir| dir.path == directory}
-                            directoryArray.append(DirectoryRepository.new.byPathOrNew(directory))
-                        end
-
-                        if imageArray.length >= 100
-                            ImageRepository.new.bulkInsert(imageArray)
-                            imageArray = []
+                    Dir.glob("./public/assets/sync/#{directory.path}/**/*/").each do |dir|
+                        path = dir.reverse.partition("/").last.reverse.partition('assets/sync/').last
+                        if !directoryArray.any? {|hash| hash.path == path}
+                            directoryArray.append(DirectoryRepository.new.byPathOrNew(path))
                         end
                     end
 
-                    if imageArray.length > 0
-                        ImageRepository.new.bulkInsert(imageArray)
-                    end
-
-                    if directoryArray.length > 0
-                        directoryArray.each do |dir|
-                            DirectoryRepository.new.update(dir.id, path: dir.path, image_count: dir.getImageCount)
+                    directory.directories.each do |dir|
+                        # remove directory if it no longer exists
+                        if !directoryArray.any? {|hash| hash.path == dir.path}
+                            DirectoryRepository.new.delete(dir.id)
+                            next
                         end
+
+                        dir.syncImages
                     end
                 end
             end

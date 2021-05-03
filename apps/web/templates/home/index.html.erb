@@ -1,6 +1,30 @@
 <h2 style="display: inline-block;">Synced Image Details</h2>
 
-<button class="button" onclick="runSync('<%= Web.routes.path(:sync) %>')">Run Sync</button>
+<button class="button" onclick="runSync('<%= Web.routes.path(:directorySync) %>')">Run Sync</button>
+<!-- <button class="button" onclick="syncDirectories()">Run Sync</button> -->
+
+
+
+
+<% if directories.any? %>
+    <h3>Directories</h3>
+    <% directories.each do |directory| %>
+        <div class="directory-row">
+            <p>
+                <strong>Name:</strong> <%= directory.name %> <br>
+                <strong>Path:</strong> <%= directory.path %> <br>
+                <strong>Status:</strong> <%= directory.status %> <br>
+                <strong>Count:</strong> <%= directory.imageCount %> <br>
+            </p>
+            <button class="button" onclick="runSync('<%= Web.routes.path(:directorySyncImages, id: directory.id) %>')">Resync</button>
+            <button class="button button-danger" href="" onclick="removeDirectory('<%= Web.routes.path(:directoryRemove, id: directory.id) %>')">Remove</button>
+        </div>
+        <hr>
+    <% end %>
+<% end %>
+
+
+
 
 <% if images.any? %>
     <p>Synced image count: <%= images.count %></p>
@@ -12,9 +36,8 @@
             <div class="directory-row">
                 <p>
                     <strong>Path:</strong> <%= directory.path %> <br>
-                    <strong>Count:</strong> <%= directory.image_count %>
                 </p>
-                <button class="button" onclick="runSync('<%= Web.routes.path(:directorySync, id: directory.id) %>')">Resync</button>
+                <button class="button" onclick="runSync('<%= Web.routes.path(:directorySyncImages, id: directory.id) %>')">Resync</button>
                 <button class="button button-danger" href="" onclick="removeDirectory('<%= Web.routes.path(:directoryRemove, id: directory.id) %>')">Remove</button>
             </div>
             <hr>

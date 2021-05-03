@@ -56,3 +56,24 @@ function removeDirectory(url) {
 
     }
 }
+
+
+function syncDirectories() {
+    $.ajax({
+        type: 'POST',
+        url: 'directories/sync',
+        success: function(data) {
+            $('.alert-syncing').css('display', 'none');
+            $('button').prop('disabled', false);
+            $('body').css('cursor', 'inherit');
+            alert("Success!" + "\n\nClick 'OK' to refresh the page");
+            location.reload();
+        },
+        error: function(data) {
+            $('.alert-syncing').css('display', 'none');
+            $('button').prop('disabled', false);
+            $('body').css('cursor', 'inherit');
+            alert("Something went wrong");
+        },
+    });
+}

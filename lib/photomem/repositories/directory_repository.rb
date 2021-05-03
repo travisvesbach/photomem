@@ -1,4 +1,7 @@
 class DirectoryRepository < Hanami::Repository
+    associations do
+        has_many :images
+    end
 
     def byId(input)
         directories.where {id.like(input)}.first
@@ -18,6 +21,10 @@ class DirectoryRepository < Hanami::Repository
 
     def byPath(path)
         directories.read("SELECT * FROM directories WHERE directories.path LIKE '#{path}'").first
+    end
+
+    def byParentPath(input)
+        directories.read("SELECT * FROM directories WHERE directories.path LIKE '%#{input}%' AND path != '#{input}'")
     end
 
     def removeByParentPath(input)
