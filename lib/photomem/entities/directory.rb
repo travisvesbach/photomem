@@ -1,40 +1,27 @@
 class Directory < Hanami::Entity
-    # def getImageCount
-    #     ImageRepository.new.byPathContains(self.path).to_a.length
-    # end
-
-    # def updateParentImageCount
-    #     path = self.path.reverse.partition("/").last.reverse
-    #     while path.length > 0
-    #         parent = DirectoryRepository.new.byPath(path)
-    #         DirectoryRepository.new.update(parent.id, path: parent.path, image_count: parent.getImageCount)
-    #         path = path.reverse.partition("/").last.reverse
-    #     end
-    # end
-
-    # def path
-    #     if self.directory
-    #         return self.directory.path + '/' + self.name
-    #     else
-    #         return 'assets/sync/' + self.name
-    #     end
-    # end
-
-    def name
-        return self.path.reverse.partition('/').first.reverse
-    end
-
-    def removeImages
-        ImageRepository.new.removeByDirectoryId(self.id)
+    def parentDirectories
+        parents = []
+        path = self.path.reverse.partition("/").last.reverse
+        while path.length > 0
+            parents.append(DirectoryRepository.new.byPath(path))
+            path = path.reverse.partition("/").last.reverse
+        end
+        return parents
     end
 
     def directories
         DirectoryRepository.new.byParentPath(self.path).to_a
     end
 
+    def imageCount
+        ImageRepository.new.byDirectoryId(self.id).count
+    end
+
     def syncImages
+        DirectoryRepository.new.update(self.id, status: 'unsynced')
         # remove images in self
         self.removeImages
+
         # add all images in self
         imageArray = []
         Dir.glob("./public/assets/sync/#{self.path}/*.{jpg,png,JPG}").each do |file|
@@ -60,7 +47,9 @@ class Directory < Hanami::Entity
         DirectoryRepository.new.update(self.id, status: 'synced')
     end
 
-    def imageCount
-        ImageRepository.new.byDirectoryId(self.id).count
+    def removeImages
+        ImageRepository.new.byDirectoryId(self.id).to_a.each do |image|
+            ImageRepository.new.delete(image.id)
+        end
     end
 end

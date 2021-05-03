@@ -12,28 +12,23 @@ class DirectoryRepository < Hanami::Repository
         if directory
             return directory
         end
-        return DirectoryRepository.new.create(path: input)
+        status = self.byPath(input.reverse.partition("/").last.reverse).status == 'ignored' ? 'ignored' : 'unsynced'
+        return self.create(path: input, status: status)
     end
 
     def orderedByPath
         directories.order(:path)
     end
 
-    def byPath(path)
-        directories.read("SELECT * FROM directories WHERE directories.path LIKE '#{path}'").first
+    def byPath(input)
+        directories.read("SELECT * FROM directories WHERE directories.path LIKE '#{input}'").first
     end
 
     def byParentPath(input)
         directories.read("SELECT * FROM directories WHERE directories.path LIKE '%#{input}%' AND path != '#{input}'")
     end
 
-    def removeByParentPath(input)
-        directories.read("SELECT * FROM directories WHERE directories.path LIKE '%#{input}%' AND path != '#{input}'").to_a.each do |directory|
-            self.delete(directory.id)
-        end
-    end
-
-    def bulkInsert(inputArray)
-        command(:create, directories, use: [:timestamps], result: :many).call(inputArray)
+    def bulkInsert(input)
+        command(:create, directories, use: [:timestamps], result: :many).call(input)
     end
 end

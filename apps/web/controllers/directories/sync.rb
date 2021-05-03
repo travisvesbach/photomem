@@ -12,6 +12,13 @@ module Web
                             directoryArray.append(DirectoryRepository.new.byPathOrNew(path))
                         end
                     end
+
+                    # remove directories that no longer exist
+                    DirectoryRepository.new.all.to_a.each do |dir|
+                        if !directoryArray.any? {|hash| hash.path == dir.path}
+                            DirectoryRepository.new.delete(dir.id)
+                        end
+                    end
                 end
             end
         end

@@ -1,7 +1,6 @@
 <h2 style="display: inline-block;">Synced Image Details</h2>
 
-<button class="button" onclick="runSync('<%= Web.routes.path(:directorySync) %>')">Run Sync</button>
-<!-- <button class="button" onclick="syncDirectories()">Run Sync</button> -->
+<button class="button" onclick="runSync('<%= Web.routes.path(:directorySync) %>')">Sync Directories</button>
 
 
 
@@ -9,15 +8,18 @@
 <% if directories.any? %>
     <h3>Directories</h3>
     <% directories.each do |directory| %>
-        <div class="directory-row">
+        <div class="directory-row <%= directory.status == 'ignored' ? 'disabled' : '' %>">
             <p>
-                <strong>Name:</strong> <%= directory.name %> <br>
                 <strong>Path:</strong> <%= directory.path %> <br>
                 <strong>Status:</strong> <%= directory.status %> <br>
                 <strong>Count:</strong> <%= directory.imageCount %> <br>
             </p>
-            <button class="button" onclick="runSync('<%= Web.routes.path(:directorySyncImages, id: directory.id) %>')">Resync</button>
-            <button class="button button-danger" href="" onclick="removeDirectory('<%= Web.routes.path(:directoryRemove, id: directory.id) %>')">Remove</button>
+            <% if directory.status != 'ignored' %>
+                <button class="button" onclick="runSync('<%= Web.routes.path(:directorySyncImages, id: directory.id) %>')"><%= directory.status == 'synced' ? 'Resync' : 'Sync' %></button>
+                <button class="button button-danger" href="" onclick="ignoreDirectory('<%= Web.routes.path(:directoryUpdate, id: directory.id) %>')">Ignore</button>
+            <% else %>
+                <button class="button" onclick="runSync('<%= Web.routes.path(:directorySyncImages, id: directory.id) %>')">Sync</button>
+            <% end %>
         </div>
         <hr>
     <% end %>
@@ -38,7 +40,6 @@
                     <strong>Path:</strong> <%= directory.path %> <br>
                 </p>
                 <button class="button" onclick="runSync('<%= Web.routes.path(:directorySyncImages, id: directory.id) %>')">Resync</button>
-                <button class="button button-danger" href="" onclick="removeDirectory('<%= Web.routes.path(:directoryRemove, id: directory.id) %>')">Remove</button>
             </div>
             <hr>
         <% end %>

@@ -1,4 +1,4 @@
-RSpec.describe Web::Controllers::Directories::Remove, type: :action do
+RSpec.describe Web::Controllers::Directories::Update, type: :action do
   let(:action) { described_class.new }
   let(:params) { Hash[] }
 

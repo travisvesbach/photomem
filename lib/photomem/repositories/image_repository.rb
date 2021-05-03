@@ -9,35 +9,17 @@ class ImageRepository < Hanami::Repository
 
     def todayOrRandom
         images = self.takenToday.to_a
-
         if !images.any?
             images = self.all
         end
-
         images.sample
     end
 
-    def bulkInsert(inputArray)
-        command(:create, images, use: [:timestamps], result: :many).call(inputArray)
+    def bulkInsert(input)
+        command(:create, images, use: [:timestamps], result: :many).call(input)
     end
-
-    # def byPathContains(input)
-    #     images.read("SELECT * FROM images WHERE images.path LIKE '%#{input}%'")
-    # end
 
     def byDirectoryId(input)
         images.where(directory_id: input)
-    end
-
-    def removeByPathContains(input)
-        images.read("SELECT * FROM images WHERE images.path LIKE '%#{input}%'").to_a.each do |image|
-            self.delete(image.id)
-        end
-    end
-
-    def removeByDirectoryId(input)
-        images.read("SELECT * FROM images WHERE images.directory_id = #{input}").to_a.each do |image|
-            self.delete(image.id)
-        end
     end
 end

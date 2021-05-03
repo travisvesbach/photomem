@@ -1,7 +1,7 @@
 module Web
   module Views
     module Directories
-      class Remove
+      class Update
         include Web::View
       end
     end

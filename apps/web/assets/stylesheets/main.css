@@ -106,6 +106,10 @@ button:disabled:hover {
     margin: 0;
 }
 
+.disabled {
+    color: #6b7280;
+}
+
 .alert {
     position: fixed;
     right: 1rem;
@@ -115,6 +119,10 @@ button:disabled:hover {
     padding: 1rem;
     font-weight: bold;
     display: none;
+}
+
+.alert-normal {
+    background: #065f46;
 }
 
 .alert-syncing {
