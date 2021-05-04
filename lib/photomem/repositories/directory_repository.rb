@@ -12,7 +12,8 @@ class DirectoryRepository < Hanami::Repository
         if directory
             return directory
         end
-        status = self.byPath(input.reverse.partition("/").last.reverse).status == 'ignored' ? 'ignored' : 'unsynced'
+        parent = self.byPath(input.reverse.partition("/").last.reverse)
+        status = parent && parent.status == 'ignored' ? 'ignored' : 'unsynced'
         return self.create(path: input, status: status)
     end
 

@@ -5,6 +5,7 @@ Hanami::Model.migration do
 
       column :name, String, null: false
       column :date_taken, DateTime, null: true
+      column :orientation, String, null: true
 
       foreign_key :directory_id, :directories, on_delete: :cascade
 

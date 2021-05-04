@@ -13,10 +13,9 @@ module Web
 
                     # Down.download(imgUrl, destination: downPath)
 
+                    imageObject = ImageRepository.new.todayOrRandom(params[:orientation])
 
-                    imageObject = ImageRepository.new.todayOrRandom
-
-                    image = MiniMagick::Image.open(imageObject.path)
+                    image = MiniMagick::Image.open(imageObject ? imageObject.path : './apps/web/assets/images/none-found.png')
 
 
                     if params[:size]
@@ -29,8 +28,10 @@ module Web
                         image.colorspace("Gray")
                     end
 
+                    image.auto_orient
 
-                    if params[:date] == 'true' && imageObject.date_taken
+
+                    if params[:date] == 'true' and imageObject and imageObject.date_taken
                         image.combine_options do |c|
                             c.gravity 'Southeast'
                             c.fill 'white'
