@@ -28,11 +28,11 @@ class Directory < Hanami::Entity
             miniImage = MiniMagick::Image.open(file)
 
             date_taken = miniImage.exif["DateTimeOriginal"] ? DateTime.strptime(miniImage.exif["DateTimeOriginal"], "%Y:%m:%d %R") : nil
-            if date_taken == nil && miniImage.exif["DateTime"]
-                date_taken = miniImage.exif["DateTime"]
-            elsif date_taken == nil && miniImage["%[date:modify]"]
-                date_taken = miniImage["%[date:modify]"]
-            end
+            # if date_taken == nil && miniImage.exif["DateTime"]
+            #     date_taken = miniImage.exif["DateTime"]
+            # elsif date_taken == nil && miniImage["%[date:modify]"]
+            #     date_taken = miniImage["%[date:modify]"]
+            # end
 
             orientation = nil
             puts miniImage.exif["Orientation"]

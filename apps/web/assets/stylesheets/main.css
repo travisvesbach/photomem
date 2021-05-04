@@ -20,7 +20,7 @@ a:hover {
 }
 
 table, th, td {
-    border: solid 1px orange;
+    border: solid 1px #92400e;
     border-collapse: collapse;
     padding: .5rem 1rem;
     text-align: left;
@@ -32,7 +32,7 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: .5rem;
+    padding: .5rem 1rem;
 }
 
 header h1 {
@@ -50,7 +50,7 @@ header h1 a {
 }
 
 .main-content {
-    padding: .5rem;
+    padding: .5rem 1rem;
 }
 
 .button {
