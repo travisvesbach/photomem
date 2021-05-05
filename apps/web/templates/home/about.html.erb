@@ -41,7 +41,16 @@
     Get random image and resize to 960x540 in grayscale with the date taken: <a href="<%= Web.routes.path(:todayOrRandom) %>?size=960x540&color=gray&date=true"><%= Web.routes.url(:todayOrRandom) %>?size=960x540&color=gray&date=true</a>
 </p>
 
-<h3>How to Add Directories</h3>
+<h3>Directories and Images</h3>
 <p>
     To add directories, add them to (or symlink them in) <code>public/assets/sync/</code>.  Then go to the <a href="<%= Web.routes.path(:directoryIndex) %>">Directories</a> page to sync the added directories into the system.  Once directories are synced, you can ignore directories and sync images in the directories you choose.
+</p>
+<p>
+    <strong>Sync Directories</strong>: syncs all the directories in <code>public/assets/sync/</code>.  Does not sync any images.<br>
+</p>
+<p>
+    <strong>Sync/Resync</strong>: syncs all images in a directory and child directories, including child directories not in the system yet.<br>
+</p>
+<p>
+    <strong>Ignore</strong>: sets the directory and all child directories to be ignored.  They won't be synced when a parent directory is synced.  Syncing ignored directories will unignore ignored parent directories as well.
 </p>

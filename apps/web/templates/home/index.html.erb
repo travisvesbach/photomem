@@ -3,8 +3,26 @@
 </div>
 
 <% if images.any? %>
-    <p>Synced image count: <%= images.count %></p>
-    <p>Images taken this day in history: <%= today.count %></p>
+    <!-- <p>Synced image count: <%= images.count %></p> -->
+    <!-- <p>Images taken this day in history: <%= today.count %></p> -->
+
+    <div class="home-status">
+        <div class="status-item">
+            <img src="assets/directory.svg"> <%= directories.count %> total <%= directories.count != 1 ? 'directories' : 'directory' %>
+        </div>
+        <div class="status-item">
+            <img src="assets/directory-open.svg"> <%= directories.count { |dir| dir.status == 'synced' } %> <%= directories.count { |dir| dir.status == 'ignored' } != 1 ? 'directories' : 'directory' %> synced
+        </div>
+        <div class="status-item">
+            <img src="assets/directory-x.svg"> <%= directories.count { |dir| dir.status == 'ignored' } %> <%= directories.count { |dir| dir.status == 'ignored' } != 1 ? 'directories' : 'directory' %> ignored
+        </div>
+        <div class="status-item">
+            <img src="assets/image.svg"> <%= images.count %> <%= images.count != 1 ? 'images' : 'image' %> synced
+        </div>
+        <div class="status-item">
+            <img src="assets/date-check.svg"> <%= today.count %> <%= today.count != 1 ? 'images' : 'image' %> taken today
+        </div>
+    </div>
 
     <% if today.any? %>
         <h3>Images Taken Today</h3>

@@ -69,6 +69,33 @@ header h1 a {
     margin: inherit auto;
 }
 
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.synced-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.status-item img {
+    margin-right: .5rem;
+}
+
+.home-status .status-item {
+    margin: 1.5rem 0;
+}
+
+
 .button {
     height: 100%;
     background: #92400e;
