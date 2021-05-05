@@ -1,23 +1,28 @@
-<h2 style="display: inline-block;">Directories</h2>
+<div class="page-title">
+    <h2>Directories</h2>
+</div>
+
 <button class="button" onclick="runSync('<%= Web.routes.path(:directorySync) %>')">Sync Directories</button>
 
-<% if directories.any? %>
-    <% directories.each do |directory| %>
-        <div class="directory-row <%= directory.status == 'ignored' ? 'disabled' : '' %>" style="margin-left: <%= directory.path.count('/') %>rem">
-            <p>
-                <strong>Path:</strong> <%= directory.path %> <br>
-                <strong>Status:</strong> <%= directory.status %> <br>
-                <% if directory.status == 'synced' %>
-                    <strong>Count:</strong> <%= directory.imageCount %> <br>
+<div class="directories">
+    <% if directories.any? %>
+        <% directories.each do |directory| %>
+            <div class="directory-row <%= directory.status == 'ignored' ? 'disabled' : '' %>" style="margin-left: <%= directory.path.count('/') %>rem">
+                <p>
+                    <strong>Path:</strong> <%= directory.path %> <br>
+                    <strong>Status:</strong> <%= directory.status %> <br>
+                    <% if directory.status == 'synced' %>
+                        <strong>Count:</strong> <%= directory.imageCount %> <br>
+                    <% end %>
+                </p>
+                <% if directory.status != 'ignored' %>
+                    <button class="button" onclick="runSync('<%= Web.routes.path(:directorySyncImages, id: directory.id) %>')"><%= directory.status == 'synced' ? 'Resync' : 'Sync' %></button>
+                    <button class="button button-danger" href="" onclick="ignoreDirectory('<%= Web.routes.path(:directoryUpdate, id: directory.id) %>')">Ignore</button>
+                <% else %>
+                    <button class="button" onclick="runSync('<%= Web.routes.path(:directorySyncImages, id: directory.id) %>')">Sync</button>
                 <% end %>
-            </p>
-            <% if directory.status != 'ignored' %>
-                <button class="button" onclick="runSync('<%= Web.routes.path(:directorySyncImages, id: directory.id) %>')"><%= directory.status == 'synced' ? 'Resync' : 'Sync' %></button>
-                <button class="button button-danger" href="" onclick="ignoreDirectory('<%= Web.routes.path(:directoryUpdate, id: directory.id) %>')">Ignore</button>
-            <% else %>
-                <button class="button" onclick="runSync('<%= Web.routes.path(:directorySyncImages, id: directory.id) %>')">Sync</button>
-            <% end %>
-        </div>
-        <hr>
+            </div>
+            <hr>
+        <% end %>
     <% end %>
-<% end %>
+</div>

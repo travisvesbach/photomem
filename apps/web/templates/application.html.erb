@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Web</title>
+        <title>PhotoMem</title>
         <%= favicon %>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -15,7 +15,11 @@
             <h1>
                 <a href="/">PhotoMem</a>
             </h1>
-            <a href="<%= Web.routes.path(:directoryIndex) %>">Directories</a>
+            <div class="nav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="<%= Web.routes.path(:directoryIndex) %>" class="nav-link">Directories</a>
+                <a href="<%= Web.routes.path(:about) %>" class="nav-link">About</a>
+            </div>
         </header>
 
         <div class="main-content">

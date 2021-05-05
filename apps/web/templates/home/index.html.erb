@@ -1,3 +1,7 @@
+<div class="page-title">
+    <h2>PhotoMem</h2>
+</div>
+
 <% if images.any? %>
     <p>Synced image count: <%= images.count %></p>
     <p>Images taken this day in history: <%= today.count %></p>
@@ -39,49 +43,7 @@
                 <% end %>
             </tbody>
         </table>
-
     <% end %>
-
-
-    <h3>How to Get an Image</h3>
-    <p>
-        To get an image from today in history and default to any day if none were taken today in history, go to <a href="<%= Web.routes.path(:todayOrRandom) %>"><%= Web.routes.url(:todayOrRandom) %></a>
-    </p>
-
-    <h4>Options</h4>
-    <table>
-        <thead>
-            <th>Option</th>
-            <th>Syntax</th>
-        </thead>
-        <tbody>
-            <tr>
-                <td>resize</td>
-                <td>size=960x540</td>
-            </tr>
-            <tr>
-                <td>grayscale</td>
-                <td>color=gray or mode=gray</td>
-            </tr>
-            <tr>
-                <td>format</td>
-                <td>format=png</td>
-            </tr>
-            <tr>
-                <td>include date</td>
-                <td>date=true</td>
-            </tr>
-            <tr>
-                <td>orientation</td>
-                <td>orientation=landscape or orientation=portrait</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p>
-        Get random image and resize to 960x540 in grayscale with the date taken: <a href="<%= Web.routes.path(:todayOrRandom) %>?size=960x540&color=gray&date=true"><%= Web.routes.url(:todayOrRandom) %>?size=960x540&color=gray&date=true</a>
-    </p>
-
 <% else %>
     <p class="placeholder">There are no images synced yet. Visit <a href="<%= Web.routes.path(:directoryIndex) %>">Directories</a> to sync directories.</p>
 <% end %>

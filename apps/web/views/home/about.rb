@@ -1,7 +1,7 @@
 module Web
   module Views
-    module Images
-      class Index
+    module Home
+      class About
         include Web::View
       end
     end

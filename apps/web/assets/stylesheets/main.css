@@ -47,10 +47,26 @@ header h1 a {
 
 .nav-link {
     font-size: 1.15rem;
+    margin-left: 1rem;
 }
 
 .main-content {
     padding: .5rem 1rem;
+}
+
+.page-title {
+    display: flex;
+    justify-content: center;
+}
+
+.page-title h2 {
+    background: #111827;
+    text-align: center;
+    border-radius: 1rem;
+    padding: 1rem;
+    font-size: 2rem;
+    display: inline-block;
+    margin: inherit auto;
 }
 
 .button {
@@ -94,6 +110,14 @@ button:disabled {
 button:disabled:hover {
     cursor: wait;
     background: #92400e;
+}
+
+code {
+    background: #111827;
+}
+
+.directories {
+    margin-top: 1rem;
 }
 
 .directory-row {

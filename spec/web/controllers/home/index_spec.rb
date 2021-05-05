@@ -1,4 +1,4 @@
-RSpec.describe Web::Controllers::Images::Index do
+RSpec.describe Web::Controllers::Home::Index do
     let(:action) { described_class.new }
     let(:params) { Hash[] }
     let(:repository) { ImageRepository.new }

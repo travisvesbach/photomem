@@ -1,6 +1,6 @@
-RSpec.describe Web::Views::Images::Index do
+RSpec.describe Web::Views::Home::Index, type: :view do
   let(:exposures) { Hash[images: []] }
-  let(:template)  { Hanami::View::Template.new('apps/web/templates/images/index.html.erb') }
+  let(:template)  { Hanami::View::Template.new('apps/web/templates/home/index.html.erb') }
   let(:view)      { described_class.new(template, exposures) }
   let(:rendered)  { view.render }
 
