@@ -1,12 +1,14 @@
 RSpec.describe Web::Controllers::Home::Index do
     let(:action) { described_class.new }
     let(:params) { Hash[] }
-    let(:repository) { ImageRepository.new }
+    let(:imageRepository) { ImageRepository.new }
+    let(:directoryRepository) { DirectoryRepository.new }
 
     before do
-      repository.clear
-
-      @image = repository.create(path: '/assets/test_image.png')
+      imageRepository.clear
+      directoryRepository.clear
+      @directory = directoryRepository.create(path: 'test')
+      @image = imageRepository.create(directory_id: @directory.id, name: 'test_image.png')
     end
 
     it 'is successful' do
