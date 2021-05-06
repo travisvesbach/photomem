@@ -1,12 +1,22 @@
 module Web
     module Controllers
         module Images
-            class TodayOrRandom
+            class Subreddit
                 include Web::Action
 
                 def call(params)
-                    imageObject = ImageRepository.new.todayOrRandom(params[:orientation])
-                    image = MiniMagick::Image.open(imageObject ? imageObject.path : './apps/web/assets/images/none-found.png')
+                    url = "https://www.reddit.com/r/#{params[:sub] ? params[:sub] : 'art'}/top.json?sort=top&t=#{params[:time] ? params[:time] : 'day'}&limit=1"
+                    data = JSON.parse(open(url, 'User-Agent' => 'thisisatestwoo').read)
+                    imgUrl = data['data']['children'][0]['data']['url_overridden_by_dest']
+
+                    downPath = './public/assets/down.png'
+
+                    if ['jpeg', 'jpg', 'png'].include? imgUrl.split(".")[-1].downcase
+                        Down.download(imgUrl, destination: downPath)
+                        image = MiniMagick::Image.open(downPath)
+                    elsif
+                        image = MiniMagick::Image.open('./apps/web/assets/images/none-found.png')
+                    end
 
                     ext = params[:format] ? params[:format] : 'png'
 
@@ -37,16 +47,6 @@ module Web
 
                     elsif params[:size]
                         image.resize params[:size]
-                    end
-
-                    if params[:date] == 'true' and imageObject and imageObject.date_taken
-                        image.combine_options do |c|
-                            c.gravity 'Southeast'
-                            c.fill 'white'
-                            c.undercolor '#0008'
-                            c.pointsize '48'
-                            c.draw "text 0,-9 '" + imageObject.date_taken.strftime('%-m/%-d/%Y') + "'"
-                        end
                     end
 
                     image.write('./public/assets/converted.' + ext)
