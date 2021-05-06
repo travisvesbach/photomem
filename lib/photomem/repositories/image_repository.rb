@@ -24,6 +24,15 @@ class ImageRepository < Hanami::Repository
         found.sample
     end
 
+    def random(orientation = nil)
+        if orientation
+            found = self.byOrientation(orientation).to_a
+        else
+            found = self.all.to_a
+        end
+        found.sample
+    end
+
     def bulkInsert(input)
         command(:create, images, use: [:timestamps], result: :many).call(input)
     end

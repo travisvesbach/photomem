@@ -2,7 +2,11 @@
     <h2>About</h2>
 </div>
 
-<h2>Today or Random</h2>
+<h2>Random and Today or Random</h2>
+
+<p>
+    The purpose of this project is to serve an image from today in history or a random image from synced directories of images.
+</p>
 
 <h3>Directories and Images</h3>
 <p>
@@ -54,11 +58,16 @@
 
 <h3>How to Get an Image</h3>
 <p>
-    To get an image from today in history and default to any day if none were taken today in history, go to <a href="<%= Web.routes.path(:todayOrRandom) %>"><%= Web.routes.url(:todayOrRandom) %></a>
+    There are two main urls for getting images.<br>
+    1. <a href="<%= Web.routes.path(:todayOrRandom) %>"><%= Web.routes.url(:todayOrRandom) %></a> returns a image taken today in history or a random one if there aren't any from today.<br>
+    2. <a href="<%= Web.routes.path(:random) %>"><%= Web.routes.url(:random) %></a> returns a random image
 </p>
 
 <p>
-    Get random image and resize to 960x540 in grayscale with the date taken: <a href="<%= Web.routes.path(:todayOrRandom) %>?size=960x540&color=gray&date=true"><%= Web.routes.url(:todayOrRandom) %>?size=960x540&color=gray&date=true</a>
+    Options from the table above can be appended to both of the url above.
+</p>
+<p>
+    <a href="<%= Web.routes.path(:todayOrRandom) %>?size=960x540&color=gray&date=true"><%= Web.routes.url(:todayOrRandom) %>?size=960x540&color=gray&date=true</a> returns an image taken today in history or random and resizes it to 960x540 in grayscale with the date taken.
 </p>
 
 <hr>
@@ -104,5 +113,5 @@
 
 <h3>How to Get a Subreddit Image</h3>
 <p>
-    To get the top post of all time's image from a specific subreddit like `art`, go to <a href="<%= Web.routes.path(:subreddit) %>?sub=art&time=all"><%= Web.routes.url(:subreddit) %>?sub=art&time=all</a>
+    <a href="<%= Web.routes.path(:subreddit) %>?sub=art&time=all"><%= Web.routes.url(:subreddit) %>?sub=art&time=all</a> returns the "art" subreddit's top post of all time's image.
 </p>
