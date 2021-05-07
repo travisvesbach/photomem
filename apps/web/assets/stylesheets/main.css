@@ -88,8 +88,11 @@ header h1 a {
     margin-right: 1.5rem;
 }
 
-.status-item img {
+.status-item svg {
+    height: 2rem;
+    width: 2rem;
     margin-right: .5rem;
+    stroke: #d97706;
 }
 
 .home-status .status-item {
