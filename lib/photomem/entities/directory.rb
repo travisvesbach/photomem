@@ -36,9 +36,9 @@ class Directory < Hanami::Entity
 
             orientation = nil
             puts miniImage.exif["Orientation"]
-            if miniImage.exif["Orientation"] == '1' or miniImage.exif["Orientation"] == '3'
+            if miniImage.exif["Orientation"] == '1' or miniImage.exif["Orientation"] == '3' or miniImage[:width] > miniImage[:height]
                 orientation = 'landscape'
-            elsif miniImage.exif["Orientation"] == '6' or miniImage.exif["Orientation"] == '8'
+            elsif miniImage.exif["Orientation"] == '6' or miniImage.exif["Orientation"] == '8' or miniImage[:width] < miniImage[:height]
                 orientation = 'portrait'
             end
 
