@@ -8,7 +8,7 @@ class DirectoryRepository < Hanami::Repository
     end
 
     def byPathOrNew(input)
-        directory = directories.read("SELECT * FROM directories WHERE directories.path = '#{input}'").first
+        directory = directories.read("SELECT * FROM directories WHERE directories.path = \"#{input}\"").first
         if directory
             return directory
         end
@@ -22,11 +22,11 @@ class DirectoryRepository < Hanami::Repository
     end
 
     def byPath(input)
-        directories.read("SELECT * FROM directories WHERE directories.path LIKE '#{input}'").first
+        directories.read("SELECT * FROM directories WHERE directories.path LIKE \"#{input}\"").first
     end
 
     def byParentPath(input)
-        directories.read("SELECT * FROM directories WHERE directories.path LIKE '%#{input}%' AND path != '#{input}'")
+        directories.read("SELECT * FROM directories WHERE directories.path LIKE \"%#{input}%\" AND path != \"#{input}\"")
     end
 
     def bulkInsert(input)
