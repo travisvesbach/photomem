@@ -19,6 +19,12 @@ module Web
                             DirectoryRepository.new.delete(dir.id)
                         end
                     end
+
+                    directories = DirectoryRepository.new.orderedByPath.to_a
+                    output = [];
+                    directories.each { |dir| output.push(dir.to_h) }
+
+                    status 200, {directories: output}.to_json
                 end
             end
         end

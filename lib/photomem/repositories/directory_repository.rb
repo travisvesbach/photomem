@@ -18,7 +18,7 @@ class DirectoryRepository < Hanami::Repository
     end
 
     def orderedByPath
-        directories.order(:path)
+        directories.order(:path).to_a.sort_by! {|dir| dir.path.gsub(' ', '') }
     end
 
     def byPath(input)

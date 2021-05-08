@@ -154,6 +154,7 @@ code {
 .directory-row {
     display: flex;
     align-items: center;
+    margin-top: .5rem;
 }
 
 .directory-row p {
@@ -210,3 +211,41 @@ code {
         transform: rotate(360deg);
     }
 }
+
+
+
+.accordion{
+}
+
+.accordion-control{
+    margin: 1rem 0 0 1rem;
+    background: #374151;
+    color: white;
+    border: none;
+    border-radius: .5rem .5rem 0 0;
+    padding: .5rem 1rem;
+}
+
+
+.accordion-control:hover {
+    background: #b45309;
+}
+
+
+.accordion-panel{
+  padding: 1rem 0 1rem 1rem;
+  display: none;
+  background: #374151;
+  border-radius: 0 0 0 1rem;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.accordion-light {
+    background: #1f2937;
+}
+
+.accordion-panel:first-child() {
+    margin-top: 0;
+}
+

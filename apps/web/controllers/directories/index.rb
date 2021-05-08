@@ -9,7 +9,7 @@ module Web
                 def call(params)
                     @directories = DirectoryRepository.new.orderedByPath.to_a
 
-                    @image_count = @images = ImageRepository.new.all.to_a.count
+                    @image_count = ImageRepository.new.all.to_a.count
                 end
             end
         end

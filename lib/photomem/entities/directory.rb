@@ -13,8 +13,12 @@ class Directory < Hanami::Entity
         DirectoryRepository.new.byParentPath(self.path).to_a
     end
 
-    def imageCount
-        ImageRepository.new.byDirectoryId(self.id).count
+    def setTotalImageCount
+        count = self.image_count
+        self.directories.each do |dir|
+            count += dir.image_count
+        end
+        DirectoryRepository.new.update(self.id, total_image_count: count)
     end
 
     def syncImages
@@ -35,14 +39,11 @@ class Directory < Hanami::Entity
             # end
 
             orientation = nil
-            puts miniImage.exif["Orientation"]
             if miniImage.exif["Orientation"] == '1' or miniImage.exif["Orientation"] == '3' or miniImage[:width] > miniImage[:height]
                 orientation = 'landscape'
             elsif miniImage.exif["Orientation"] == '6' or miniImage.exif["Orientation"] == '8' or miniImage[:width] < miniImage[:height]
                 orientation = 'portrait'
             end
-
-            puts orientation
 
             name = file.reverse.partition("/").first.reverse
             imageArray.append({name: name, date_taken: date_taken, directory_id: self.id, orientation: orientation})
@@ -57,7 +58,7 @@ class Directory < Hanami::Entity
             ImageRepository.new.bulkInsert(imageArray)
         end
 
-        DirectoryRepository.new.update(self.id, status: 'synced')
+        DirectoryRepository.new.update(self.id, status: 'synced', image_count: ImageRepository.new.byDirectoryId(self.id).count)
     end
 
     def removeImages

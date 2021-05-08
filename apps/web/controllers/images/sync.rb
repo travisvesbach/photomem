@@ -20,6 +20,9 @@ module Web
                     directory.removeImages
                     directory.syncImages
 
+                    # reload directory
+                    directory = DirectoryRepository.new.find(params[:id])
+
                     # create child directories that don't exist
                     directoryArray = []
                     Dir.glob("./public/assets/sync/#{directory.path}/**/*/").each do |dir|
@@ -41,6 +44,24 @@ module Web
                             dir.syncImages
                         end
                     end
+
+                    directory.setTotalImageCount
+
+                    directory.directories.each do |dir|
+                        dir.setTotalImageCount
+                    end
+
+                    directory.parentDirectories.each do |dir|
+                        dir.setTotalImageCount
+                    end
+
+                    directories = DirectoryRepository.new.orderedByPath.to_a
+                    image_count = ImageRepository.new.all.to_a.count
+
+                    output = [];
+                    directories.each { |dir| output.push(dir.to_h) }
+
+                    status 200, {directories: output, image_count: image_count}.to_json
                 end
             end
         end
