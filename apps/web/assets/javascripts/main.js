@@ -37,9 +37,6 @@ function ajaxSync(url, type = "POST", data = null) {
                     target.find('.ignored-hidden').show();
                     target.find('.ignored-show').hide();
                 }
-                console.log(dir.status);
-                console.log(dir.image_count);
-                console.log(dir.total_image_count);
                 target.find('.directory-status').text(dir.status);
                 target.find('.directory-image-count').text(dir.image_count);
                 target.find('.directory-total-image-count').text(dir.total_image_count);

@@ -38,10 +38,15 @@ class Directory < Hanami::Entity
             #     date_taken = miniImage["%[date:modify]"]
             # end
 
+
             orientation = nil
-            if miniImage.exif["Orientation"] == '1' or miniImage.exif["Orientation"] == '3' or miniImage[:width] > miniImage[:height]
+            if miniImage.exif["Orientation"] == '1' or miniImage.exif["Orientation"] == '3'
                 orientation = 'landscape'
-            elsif miniImage.exif["Orientation"] == '6' or miniImage.exif["Orientation"] == '8' or miniImage[:width] < miniImage[:height]
+            elsif miniImage.exif["Orientation"] == '6' or miniImage.exif["Orientation"] == '8'
+                orientation = 'portrait'
+            elsif miniImage[:width] > miniImage[:height]
+                orientation = 'landscape'
+            elsif miniImage[:width] < miniImage[:height]
                 orientation = 'portrait'
             end
 
