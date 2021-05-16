@@ -28,34 +28,42 @@ class Directory < Hanami::Entity
 
         # add all images in self
         imageArray = []
-        Dir.glob("./public/assets/sync/#{self.path}/*.{jpg,png,JPG}").each do |file|
-            miniImage = MiniMagick::Image.open(file)
+        Dir.glob("./public/assets/sync/#{self.path}/*.{jpg,png,jpeg,JPG,PNG,JPEG}").each do |file|
+            puts file
 
-            date_taken = miniImage.exif["DateTimeOriginal"] ? DateTime.strptime(miniImage.exif["DateTimeOriginal"], "%Y:%m:%d %R") : nil
-            # if date_taken == nil && miniImage.exif["DateTime"]
-            #     date_taken = miniImage.exif["DateTime"]
-            # elsif date_taken == nil && miniImage["%[date:modify]"]
-            #     date_taken = miniImage["%[date:modify]"]
-            # end
+            if miniImage = MiniMagick::Image.open(file)
+
+                date_taken = miniImage.exif["DateTimeOriginal"] ? DateTime.strptime(miniImage.exif["DateTimeOriginal"], "%Y:%m:%d %R") : nil
+                # if date_taken == nil && miniImage.exif["DateTime"]
+                #     date_taken = miniImage.exif["DateTime"]
+                # elsif date_taken == nil && miniImage["%[date:modify]"]
+                #     date_taken = miniImage["%[date:modify]"]
+                # end
 
 
-            orientation = nil
-            if miniImage.exif["Orientation"] == '1' or miniImage.exif["Orientation"] == '3'
-                orientation = 'landscape'
-            elsif miniImage.exif["Orientation"] == '6' or miniImage.exif["Orientation"] == '8'
-                orientation = 'portrait'
-            elsif miniImage[:width] > miniImage[:height]
-                orientation = 'landscape'
-            elsif miniImage[:width] < miniImage[:height]
-                orientation = 'portrait'
-            end
+                orientation = nil
+                if miniImage.exif["Orientation"] == '1' or miniImage.exif["Orientation"] == '3'
+                    orientation = 'landscape'
+                elsif miniImage.exif["Orientation"] == '6' or miniImage.exif["Orientation"] == '8'
+                    orientation = 'portrait'
+                elsif miniImage[:width] > miniImage[:height]
+                    orientation = 'landscape'
+                elsif miniImage[:width] < miniImage[:height]
+                    orientation = 'portrait'
+                end
 
-            name = file.reverse.partition("/").first.reverse
-            imageArray.append({name: name, date_taken: date_taken, directory_id: self.id, orientation: orientation})
+                name = file.reverse.partition("/").first.reverse
 
-            if imageArray.length >= 100
-                ImageRepository.new.bulkInsert(imageArray)
-                imageArray = []
+
+                puts name
+
+
+                imageArray.append({name: name, date_taken: date_taken, directory_id: self.id, orientation: orientation})
+
+                if imageArray.length >= 100
+                    ImageRepository.new.bulkInsert(imageArray)
+                    imageArray = []
+                end
             end
         end
 

@@ -8,7 +8,8 @@ class DirectoryRepository < Hanami::Repository
     end
 
     def byPathOrNew(input)
-        directory = directories.read("SELECT * FROM directories WHERE directories.path = \"#{input}\"").first
+        # directory = directories.read("SELECT * FROM directories WHERE directories.path = \"#{input}\"").first
+        directory = self.byPath(input)
         if directory
             return directory
         end
