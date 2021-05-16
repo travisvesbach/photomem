@@ -51,8 +51,8 @@ module Web
 
                     if params[:format] == 'h'
                         image.write('./public/assets/converted.png')
-                        # result = `python3 ./scripts/imgconvert.py -i ./public/assets/converted.png -n pic -o ./public/assets/converted.h`
-                        # result = system("python3 ./scripts/imgconvert.py -i ./public/assets/converted.png -n pic -o ./public/assets/converted.h")
+                        result = `python3 ./scripts/imgconvert.py -i ./public/assets/converted.png -n pic -o ./public/assets/converted.h`
+                        result = system("python3 ./scripts/imgconvert.py -i ./public/assets/converted.png -n pic -o ./public/assets/converted.h")
                         data = IO.read("./public/assets/converted.h")
 
                         width = data.split("pic_width = ").last
@@ -79,7 +79,7 @@ module Web
 
 
 
-                        puts jsonData
+                        # puts jsonData
                         # Hanami.logger.debug("result----------------------")
                         # Hanami.logger.debug(result)
                         # abort
