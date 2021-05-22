@@ -6,9 +6,7 @@ module Web
 
                 def call(params)
                     imageObject = ImageRepository.new.todayOrRandom(params[:orientation])
-                    image = MiniMagick::Image.open(imageObject ? imageObject.path : './apps/web/assets/images/none-found.png')
-
-
+                    image = MiniMagick::Image.open(imageObject ? imageObject.path : './apps/web/assets/images/none-found.jpg')
 
                     if params[:color] == 'gray' or params[:mode] == 'gray'
                         image.colorspace("Gray")
@@ -50,44 +48,14 @@ module Web
                     end
 
                     if params[:format] == 'h'
-                        image.write('./public/assets/converted.png')
-                        result = `python3 ./scripts/imgconvert.py -i ./public/assets/converted.png -n pic -o ./public/assets/converted.h`
-                        result = system("python3 ./scripts/imgconvert.py -i ./public/assets/converted.png -n pic -o ./public/assets/converted.h")
+                        image.write('./public/assets/converted.jpg')
+                        result = system("python3 ./scripts/imgconvert.py -i ./public/assets/converted.jpg -n pic -o ./public/assets/converted.h")
+
                         data = IO.read("./public/assets/converted.h")
-
-                        width = data.split("pic_width = ").last
-                        width = width.split(";").first
-
-                        height = data.split("pic_height = ").last
-                        height = height.split(";").first
-
-                        data = data.split("{").last
-                        data = data.split("}").first
-                        data = data.gsub(' ', '').gsub(/\t/, '')
-
-
-                        self.format = :json
-
-                        jsonData =  JSON.generate({
-                            'pic_width' => width,
-                            'pic_height' => height,
-                            'pic_data' => data
-
-                        })
-                        # json(jsonData)
-                        self.body = jsonData
-
-
-
-                        # puts jsonData
-                        # Hanami.logger.debug("result----------------------")
-                        # Hanami.logger.debug(result)
-                        # abort
-
-
+                        send_file("/assets/converted.h")
 
                     else
-                        ext = params[:format] ? params[:format] : 'png'
+                        ext = params[:format] ? params[:format] : 'jpg'
                         image.write('./public/assets/converted.' + ext)
                         send_file('/assets/converted.' + ext)
                     end
