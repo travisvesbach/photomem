@@ -4,11 +4,11 @@ class ImageRepository < Hanami::Repository
     end
 
     def takenToday()
-        images.read("SELECT * FROM images WHERE strftime( '%m', images.date_taken ) = strftime('%m','now') AND strftime( '%d', images.date_taken ) = strftime('%d','now')")
+        images.read("SELECT * FROM images WHERE strftime( '%m', images.date_taken ) = strftime('%m','now', 'localtime') AND strftime( '%d', images.date_taken ) = strftime('%d','now', 'localtime')")
     end
 
     def todayOrRandom(orientation = nil)
-        query = "SELECT * FROM images WHERE strftime( '%m', images.date_taken ) = strftime('%m','now') AND strftime( '%d', images.date_taken ) = strftime('%d','now')"
+        query = "SELECT * FROM images WHERE strftime( '%m', images.date_taken ) = strftime('%m','now', 'localtime') AND strftime( '%d', images.date_taken ) = strftime('%d','now', 'localtime')"
         if orientation
             query = query + " AND images.orientation LIKE '#{orientation}'"
             found = images.read(query).to_a
