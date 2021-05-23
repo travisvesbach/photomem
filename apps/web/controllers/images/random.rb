@@ -5,52 +5,50 @@ module Web
                 include Web::Action
 
                 def call(params)
-                    imageObject = ImageRepository.new.random(params[:orientation])
-                    image = MiniMagick::Image.open(imageObject ? imageObject.path : './apps/web/assets/images/none-found.png')
-
-                    ext = params[:format] ? params[:format] : 'png'
-
-                    if params[:color] == 'gray' or params[:mode] == 'gray'
-                        image.colorspace("Gray")
+                    if params.to_h.key?(:today)
+                        imageObject = ImageRepository.new.todayOrRandom(params[:orientation])
+                    else
+                        imageObject = ImageRepository.new.random(params[:orientation])
                     end
 
-                    image.auto_orient
+                    path = imageObject.path.gsub(' ', '\ ')
 
+                    color = ' '
+                    if params.to_h.key?(:gray) or params.to_h.key?(:grey) or params[:color] == 'gray'
+                        color += '-colorspace gray '
+                    end
+                    orientation = ' -auto-orient '
+
+                    crop = ' '
                     if params[:crop]
-                        width = params[:crop].partition('x').first.to_i
-                        height = params[:crop].partition('x').last.to_i
+                        width = params[:crop].partition('x').first
+                        height = params[:crop].partition('x').last
 
-                        w_original, h_original = [image[:width].to_f, image[:height].to_f]
-
-                        o_size = nil
-                        if width > height
-                            o_size = "#{width}x"
-                        else
-                            o_size = "x#{height}"
-                        end
-
-                        image.combine_options do |c|
-                          c.resize(o_size)
-                          c.gravity(:center)
-                          c.crop "#{width}x#{height}+0+0!"
-                        end
-
-                    elsif params[:size]
-                        image.resize params[:size]
+                        crop += '-resize ' + width + 'x' + height + '^ -gravity center -extent ' + width + 'x' + height
                     end
 
-                    if params[:date] == 'true' and imageObject and imageObject.date_taken
-                        image.combine_options do |c|
-                            c.gravity 'Southeast'
-                            c.fill 'white'
-                            c.undercolor '#0008'
-                            c.pointsize '48'
-                            c.draw "text 0,-9 '" + imageObject.date_taken.strftime('%-m/%-d/%Y') + "'"
-                        end
+                    date = ' '
+                    if params.to_h.key?(:date) and imageObject and imageObject.date_taken
+                        date += "-fill white -pointsize 48 -undercolor '#0008' -gravity Southeast -draw 'text 0,-9 \"" +  imageObject.date_taken.strftime('%-m/%-d/%Y') + "\"'"
                     end
 
-                    image.write('./public/assets/converted.' + ext)
-                    send_file('/assets/converted.' + ext)
+                    extension = path.reverse.partition('.').first.reverse.gsub(' ', '')
+                    if params[:format] and params[:format] != 'bytes'
+                        extension = params[:format]
+                    end
+
+                    destination = ' ./public/assets/converted.' + extension
+
+                    command = 'convert ' + path + color + orientation + crop + date + destination
+
+                    system(command)
+
+                    if params[:format] and params[:format] == 'bytes'
+                        system("python3 ./scripts/imgconvert.py -i " + destination + " -n pic -o ./public/assets/converted.h")
+                        send_file("/assets/converted.h")
+                    else
+                        send_file(destination.partition('public').last)
+                    end
                 end
             end
         end

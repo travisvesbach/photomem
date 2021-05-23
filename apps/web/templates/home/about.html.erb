@@ -29,9 +29,13 @@
         <th>Syntax</th>
     </thead>
     <tbody>
+        <!-- <tr> -->
+            <!-- <td>resize</td> -->
+            <!-- <td>size=960x540</td> -->
+        <!-- </tr> -->
         <tr>
-            <td>resize</td>
-            <td>size=960x540</td>
+            <td>today in history</td>
+            <td>today=true or today</td>
         </tr>
         <tr>
             <td>crop</td>
@@ -39,15 +43,19 @@
         </tr>
         <tr>
             <td>grayscale</td>
-            <td>color=gray or mode=gray</td>
+            <td>color=gray or mode=gray or gray</td>
         </tr>
         <tr>
             <td>format</td>
             <td>format=png</td>
         </tr>
         <tr>
+            <td>file of byte data</td>
+            <td>format=bytes</td>
+        </tr>
+        <tr>
             <td>include date</td>
-            <td>date=true</td>
+            <td>date=true or date</td>
         </tr>
         <tr>
             <td>orientation</td>
@@ -58,16 +66,15 @@
 
 <h3>How to Get an Image</h3>
 <p>
-    There are two main urls for getting images.<br>
-    1. <a href="<%= Web.routes.path(:todayOrRandom) %>"><%= Web.routes.url(:todayOrRandom) %></a> returns a image taken today in history or a random one if there aren't any from today.<br>
-    2. <a href="<%= Web.routes.path(:random) %>"><%= Web.routes.url(:random) %></a> returns a random image
+    There is one main url for getting images.<br>
+    <a href="<%= Web.routes.path(:random) %>"><%= Web.routes.url(:random) %></a>
 </p>
 
 <p>
     Options from the table above can be appended to both of the url above.
 </p>
 <p>
-    <a href="<%= Web.routes.path(:todayOrRandom) %>?size=960x540&color=gray&date=true"><%= Web.routes.url(:todayOrRandom) %>?size=960x540&color=gray&date=true</a> returns an image taken today in history or random and resizes it to 960x540 in grayscale with the date taken.
+    <a href="<%= Web.routes.path(:random) %>?today=true&crop=960x540&color=gray&date=true"><%= Web.routes.url(:random) %>?today=true&crop=960x540&color=gray&date=true</a> returns an image taken today in history or random and crops it to 960x540 in grayscale with the date taken.
 </p>
 
 <hr>
@@ -84,17 +91,17 @@
         <th>Syntax</th>
     </thead>
     <tbody>
-        <tr>
-            <td>resize</td>
-            <td>size=960x540</td>
-        </tr>
+        <!-- <tr> -->
+            <!-- <td>resize</td> -->
+            <!-- <td>size=960x540</td> -->
+        <!-- </tr> -->
         <tr>
             <td>crop</td>
             <td>crop=960x540</td>
         </tr>
         <tr>
             <td>grayscale</td>
-            <td>color=gray or mode=gray</td>
+            <td>color=gray or mode=gray or gray</td>
         </tr>
         <tr>
             <td>format</td>
