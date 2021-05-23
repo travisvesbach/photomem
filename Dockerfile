@@ -2,6 +2,9 @@ FROM ruby:2.5
 
 RUN apt-get update && apt-get install -y sqlite3 libsqlite3-dev ghostscript
 RUN apt-get install git
+RUN apt-get install -y python3 python3-pip
+RUN apt-get install imagemagick
+RUN python3 -m pip install pillow
 
 WORKDIR /app
 COPY Gemfile /app/Gemfile
