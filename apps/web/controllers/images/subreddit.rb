@@ -40,8 +40,8 @@ module Web
                     system(command)
 
                     if params[:format] and params[:format] == 'bytes'
-                        system("python3 ./scripts/imgconvert.py -i " + destination + " -n pic -o ./public/assets/converted.h")
-                        send_file("/assets/converted.h")
+                        system("python3 ./scripts/imgconvert.py -i " + destination + " -n pic -o ./public/assets/converted.txt")
+                        send_file("/assets/converted.txt")
                     else
                         send_file(destination.partition('public').last)
                     end
