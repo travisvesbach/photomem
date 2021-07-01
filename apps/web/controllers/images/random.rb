@@ -11,7 +11,9 @@ module Web
                         imageObject = ImageRepository.new.random(params[:orientation])
                     end
 
-                    path = imageObject.path.gsub(' ', '\ ')
+                    # %q(a string) is equivalent to a single-quoted string
+                    # gsub(%q('), %q(\\\')) is used to escape single quotes in a string
+                    path = imageObject.path.gsub(' ', '\ ').gsub(%q('), %q(\\\'))
 
                     color = ' '
                     if params.to_h.key?(:gray) or params.to_h.key?(:grey) or params[:color] == 'gray'
@@ -29,7 +31,7 @@ module Web
 
                     date = ' '
                     if params.to_h.key?(:date) and imageObject and imageObject.date_taken
-                        date += "-fill white -pointsize 48 -undercolor '#0008' -gravity Southeast -draw 'text 0,-9 \"" +  imageObject.date_taken.strftime('%-m/%-d/%Y') + "\"'"
+                        date += "-fill white -pointsize 48 -undercolor '#0008' -gravity Southeast -draw 'text 0,-9 \"connection error\"'"
                     end
 
                     extension = path.reverse.partition('.').first.reverse.gsub(' ', '')

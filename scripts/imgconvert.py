@@ -54,4 +54,5 @@ with open(args.outputfile, 'w') as f:
             # write to file as a 3 digit decimal
             f.write(str(byte).zfill(3))
 #        f.write("\n\t");
-#    f.write("};\n")
+    # end the file with an ! to indicate the end
+    f.write("!")
