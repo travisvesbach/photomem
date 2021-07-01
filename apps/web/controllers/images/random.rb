@@ -31,7 +31,7 @@ module Web
 
                     date = ' '
                     if params.to_h.key?(:date) and imageObject and imageObject.date_taken
-                        date += "-fill white -pointsize 48 -undercolor '#0008' -gravity Southeast -draw 'text 0,-9 \"connection error\"'"
+                        date += "-fill white -pointsize 48 -undercolor '#0008' -gravity Southeast -draw 'text 0,-9 \"" +  imageObject.date_taken.strftime('%-m/%-d/%Y') + "\"'"
                     end
 
                     extension = path.reverse.partition('.').first.reverse.gsub(' ', '')
