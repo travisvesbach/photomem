@@ -44,4 +44,8 @@ class ImageRepository < Hanami::Repository
     def byOrientation(orientation)
         images.read("SELECT * FROM images WHERE images.orientation LIKE '#{orientation}'")
     end
+
+    def byDirectoryIdAndName(directory_id, name)
+        images.where(directory_id: directory_id).where(name: name)
+    end
 end

@@ -7,6 +7,7 @@ module Web
                 def call(params)
                     directory = DirectoryRepository.new.find(params[:id])
 
+                    # if changing to ignored, remove all images in self and child directories
                     if params[:ignore] == 'true'
                         directory.removeImages
                         DirectoryRepository.new.update(directory.id, status: 'ignored', image_count: 0, total_image_count: 0)

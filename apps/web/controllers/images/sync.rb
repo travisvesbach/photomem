@@ -16,11 +16,8 @@ module Web
                         end
                     end
 
-                    # remove directory images and sync
-                    directory.removeImages
+                    # sync and reload directory
                     directory.syncImages
-
-                    # reload directory
                     directory = DirectoryRepository.new.find(params[:id])
 
                     # create child directories that don't exist
@@ -45,12 +42,11 @@ module Web
                         end
                     end
 
+                    # set image counts for self, parent directories, and child directories
                     directory.setTotalImageCount
-
                     directory.directories.each do |dir|
                         dir.setTotalImageCount
                     end
-
                     directory.parentDirectories.each do |dir|
                         dir.setTotalImageCount
                     end
