@@ -61,7 +61,9 @@
                     <span class="ignored-hidden" style="display: <%= directory.status == 'ignored' ? 'none' : 'block' %>;">
                         <strong>Count:</strong>
                         <span class="directory-image-count"><%= directory.image_count %></span>
-                        [<span class="directory-total-image-count" title="includes child directories"><%= directory.total_image_count %></span>]
+                        <% if directory.directories.count > 0 %>
+                            [<span class="directory-total-image-count" title="includes child directories"><%= directory.total_image_count %></span>]
+                        <% end %>
                     </span>
 
                 </p>
